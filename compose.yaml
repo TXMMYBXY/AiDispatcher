@@ -1,0 +1,7 @@
+﻿services:
+  aidispatcher.worker:
+    image: aidispatcher.worker
+    build:
+      context: .
+      dockerfile: AiDispatcher.Worker/Dockerfile
+

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="compose.yaml" />
+  </Folder>
+  <Project Path="AiDispatcher.Application/AiDispatcher.Application.csproj" />
+  <Project Path="AiDispatcher.Domain/AiDispatcher.Domain.csproj" />
+  <Project Path="AiDispatcher.Infrastructure/AiDispatcher.Infrastructure.csproj" />
+  <Project Path="AiDispatcher.Shared/AiDispatcher.Shared.csproj" />
+  <Project Path="AiDispatcher.Worker/AiDispatcher.Worker.csproj" />
+</Solution>
