@@ -12,8 +12,6 @@ public class WebhookDelivery
     public DateTime DeliveredAt { get; private set; }
     public string? ErrorMessage { get; private set; }
 
-    public WebhookDelivery() { }
-
     public WebhookDelivery(Guid responseId, string webhookUrl, int attemptNumber = 1)
     {
         if (string.IsNullOrWhiteSpace(webhookUrl))

@@ -16,8 +16,6 @@ public class AiAgent
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
 
-    public AiAgent() { }
-
     public AiAgent(
         string name,
         AgentType type,

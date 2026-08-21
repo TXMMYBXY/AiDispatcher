@@ -9,8 +9,6 @@ public class PromptTemplate
     public bool IsActive { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    public PromptTemplate() { }
-
     public PromptTemplate(string name, string template)
     {
         if (string.IsNullOrWhiteSpace(name))

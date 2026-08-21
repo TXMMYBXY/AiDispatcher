@@ -9,8 +9,6 @@ public class UserIntent
     public string Description { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    public UserIntent() { }
-
     public UserIntent(string description, IntentType intentType)
     {
         Id = Guid.NewGuid();

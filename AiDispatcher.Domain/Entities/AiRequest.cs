@@ -18,8 +18,6 @@ public class AiRequest
     public int RetryCount { get; private set; }
     public int MaxRetries { get; private set; }
 
-    public AiRequest() { }
-
     public AiRequest(
         Guid agentId,
         string content,

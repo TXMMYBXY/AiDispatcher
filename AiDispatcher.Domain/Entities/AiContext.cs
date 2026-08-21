@@ -8,8 +8,6 @@ public class AiContext
     public Dictionary<string, object> AdditionalContext { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    public AiContext() { }
-
     public AiContext(string question, byte[]? image = null)
     {
         if (string.IsNullOrWhiteSpace(question) && (image == null || image.Length == 0))

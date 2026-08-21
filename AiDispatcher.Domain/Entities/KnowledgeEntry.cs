@@ -8,8 +8,6 @@ public class KnowledgeEntry
     public double? RelevanceScore { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    public KnowledgeEntry() { }
-
     public KnowledgeEntry(byte[] content, string sourceLink)
     {
         if (content == null || content.Length == 0)
