@@ -17,4 +17,13 @@
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Configuration\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AiDispatcher.Application\AiDispatcher.Application.csproj" />
+      <ProjectReference Include="..\AiDispatcher.Infrastructure\AiDispatcher.Infrastructure.csproj" />
+    </ItemGroup>
 </Project>
