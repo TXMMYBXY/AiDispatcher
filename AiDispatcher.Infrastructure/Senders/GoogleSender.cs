@@ -26,6 +26,6 @@ public class GoogleSender : IRequestSender
             contents: request.Content,
             cancellationToken: ct);
         
-        return new AiResponse(requestId: Guid.CreateVersion7(), content: response.Text);
+        return new AiResponse(requestId: request.Id, content: response.Text);
     }
 }
