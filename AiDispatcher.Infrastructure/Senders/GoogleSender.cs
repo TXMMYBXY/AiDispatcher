@@ -2,6 +2,7 @@ using AiDispatcher.Domain.Entities;
 using AiDispatcher.Domain.Enums;
 using AiDispatcher.Infrastructure.Configuration;
 using Google.GenAI;
+using Google.GenAI.Types;
 using Microsoft.Extensions.Options;
 
 namespace AiDispatcher.Infrastructure.Senders;
@@ -21,10 +22,20 @@ public class GoogleSender : IRequestSender
     {
         var client = new Client(apiKey: _settings.ApiKey);
 
-        var response = await client.Models.GenerateContentAsync(
-            model: "gemini-flash-latest",
-            contents: request.Content,
-            cancellationToken: ct);
+        GenerateContentResponse response = null;
+        
+        try
+        {
+            response = await client.Models.GenerateContentAsync(
+                model: "gemini-3.6-flash",
+                contents: request.Content,
+                cancellationToken: ct);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         
         return new AiResponse(requestId: request.Id, content: response.Text);
     }

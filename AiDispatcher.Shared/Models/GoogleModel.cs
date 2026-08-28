@@ -6,6 +6,6 @@ public class GoogleModel
 {
     public Dictionary<AgentType, string> models = new()
     {
-        { AgentType.Gemini, "gemini-flash-latest" },
+        { AgentType.Gemini, "gemini-2.0-flash" },
     };
 }

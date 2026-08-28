@@ -1,3 +1,4 @@
+using AiDispatcher.Domain.Enums;
 using AiDispatcher.Infrastructure.AiDispatcher;
 using AiDispatcher.Infrastructure.Configuration;
 using AiDispatcher.Infrastructure.Consumers;
@@ -35,10 +36,16 @@ public static class DependencyInjection
         });
         
         services.AddScoped<IAgentDispatcher, AgentDispatcher>();
-
+        services.AddScoped<GoogleSender>();
         services.AddScoped<IRequestSender, GoogleSender>();
 
         services.AddHttpClient<IWebhookClient, WebhookClient>();
+
+        services.AddScoped<IReadOnlyDictionary<AgentType, IRequestSender>>(sp =>
+            new Dictionary<AgentType, IRequestSender>()
+            {
+                { AgentType.Gemini, sp.GetRequiredService<GoogleSender>()}
+            });
         
         return services;
     }
