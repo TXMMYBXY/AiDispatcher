@@ -1,7 +1,29 @@
 ﻿services:
-  aidispatcher.worker:
+  worker:
     image: aidispatcher.worker
+    container_name: worker
     build:
       context: .
       dockerfile: AiDispatcher.Worker/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASSWORD: guest
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
 

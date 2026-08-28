@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AiDispatcher.Domain\AiDispatcher.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -6,12 +6,12 @@ public class AiRequest
 {
     public Guid Id { get; private set; }
     public Guid? UserId { get; private set; }
-    public Guid AgentId { get; private set; }
+    public AgentType AgentId { get; private set; }
     public string Content { get; private set; }
     public byte[]? ImageData { get; private set; }
     public RequestStatus Status { get; private set; }
     public ResponseChannel ResponseChannel { get; private set; }
-    public string? WebhookUrl { get; private set; }
+    public required string WebhookUrl { get; set; }
     public Dictionary<string, string> Metadata { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? ProcessedAt { get; private set; }
@@ -19,12 +19,12 @@ public class AiRequest
     public int MaxRetries { get; private set; }
 
     public AiRequest(
-        Guid agentId,
+        AgentType agentId,
         string content,
         ResponseChannel responseChannel,
+        string webhookUrl,
         byte[]? imageData = null,
-        Guid? userId = null,
-        string? webhookUrl = null)
+        Guid? userId = null)
     {
         if (string.IsNullOrWhiteSpace(content) && (imageData == null || imageData.Length == 0))
             throw new ArgumentException("Either content or imageData must be provided");
