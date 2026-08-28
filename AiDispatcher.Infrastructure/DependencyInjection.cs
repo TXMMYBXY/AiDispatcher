@@ -32,10 +32,9 @@ public static class DependencyInjection
         
                 cfg.ConfigureEndpoints(ctx);
             });
-
         });
         
-        services.AddSingleton<IAgentDispatcher, AgentDispatcher>();
+        services.AddScoped<IAgentDispatcher, AgentDispatcher>();
 
         services.AddScoped<IRequestSender, GoogleSender>();
 
