@@ -1,11 +1,10 @@
-using AiDispatcher.Domain.Enums;
-
 namespace AiDispatcher.Domain.Entities;
 
 public class AiResponse
 {
     public Guid Id { get; private set; }
     public Guid RequestId { get; private set; }
+    public long ChatId { get; private set; }
     public string Content { get; private set; }
     public byte[]? ImageData { get; private set; }
     public int TokensUsed { get; private set; }
@@ -16,12 +15,13 @@ public class AiResponse
 
     private AiResponse() { }
 
-    public AiResponse(Guid requestId, string content, int tokensUsed = 0)
+    public AiResponse(Guid requestId, long chatId, string content, int tokensUsed = 0)
     {
         if (string.IsNullOrWhiteSpace(content))
             throw new ArgumentException("Content cannot be empty", nameof(content));
 
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
+        ChatId = chatId;
         RequestId = requestId;
         Content = content;
         TokensUsed = tokensUsed;
