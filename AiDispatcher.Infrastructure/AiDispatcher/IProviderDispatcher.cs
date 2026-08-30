@@ -2,7 +2,7 @@ using AiDispatcher.Domain.Entities;
 
 namespace AiDispatcher.Infrastructure.AiDispatcher;
 
-public interface IAgentDispatcher
+public interface IProviderDispatcher
 {
     Task DispatchAsync(AiRequest request);
 }

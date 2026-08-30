@@ -5,13 +5,13 @@ using AiDispatcher.Infrastructure.Senders;
 
 namespace AiDispatcher.Infrastructure.AiDispatcher;
 
-public class AgentDispatcher : IAgentDispatcher
+public class ProviderDispatcher : IProviderDispatcher
 {
-    private readonly IReadOnlyDictionary<AgentType, IRequestSender> _requestSenders;
+    private readonly IReadOnlyDictionary<ModelProvider, IRequestSender> _requestSenders;
     private readonly IWebhookClient _webhookClient;
     
-    public AgentDispatcher(
-        IReadOnlyDictionary<AgentType, IRequestSender> requestSenders, 
+    public ProviderDispatcher(
+        IReadOnlyDictionary<ModelProvider, IRequestSender> requestSenders, 
         IWebhookClient webhookClient)
     {
         _requestSenders = requestSenders;
@@ -22,7 +22,7 @@ public class AgentDispatcher : IAgentDispatcher
     {
         request.MarkAsProcessing();
         
-        var response = await _requestSenders[request.AgentId].SendRequestAsync(request);
+        var response = await _requestSenders[request.ModelProviderId].SendRequestAsync(request);
         
         request.MarkAsCompleted();
         

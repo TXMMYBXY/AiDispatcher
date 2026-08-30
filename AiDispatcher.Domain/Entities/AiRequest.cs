@@ -6,7 +6,7 @@ public class AiRequest
 {
     public Guid Id { get; private set; }
     public long UserId { get; private set; }
-    public AgentType AgentId { get; private set; }
+    public ModelProvider ModelProviderId { get; private set; }
     public string Content { get; private set; }
     public byte[]? ImageData { get; private set; }
     public RequestStatus Status { get; private set; }
@@ -20,7 +20,7 @@ public class AiRequest
 
     public AiRequest(
         long userId,
-        AgentType agentId,
+        ModelProvider modelProviderId,
         string content,
         ResponseChannel responseChannel,
         string webhookUrl,
@@ -33,7 +33,7 @@ public class AiRequest
             throw new ArgumentException("WebhookUrl is required when ResponseChannel is Webhook", nameof(webhookUrl));
 
         Id = Guid.NewGuid();
-        AgentId = agentId;
+        ModelProviderId = modelProviderId;
         UserId = userId;
         Content = content ?? string.Empty;
         ImageData = imageData;

@@ -35,16 +35,17 @@ public static class DependencyInjection
             });
         });
         
-        services.AddScoped<IAgentDispatcher, AgentDispatcher>();
+        services.AddScoped<IProviderDispatcher, ProviderDispatcher>();
+        
         services.AddScoped<GoogleSender>();
         services.AddScoped<IRequestSender, GoogleSender>();
 
         services.AddHttpClient<IWebhookClient, WebhookClient>();
 
-        services.AddScoped<IReadOnlyDictionary<AgentType, IRequestSender>>(sp =>
-            new Dictionary<AgentType, IRequestSender>()
+        services.AddScoped<IReadOnlyDictionary<ModelProvider, IRequestSender>>(sp =>
+            new Dictionary<ModelProvider, IRequestSender>()
             {
-                { AgentType.Gemini, sp.GetRequiredService<GoogleSender>()}
+                { ModelProvider.Google, sp.GetRequiredService<GoogleSender>()}
             });
         
         return services;

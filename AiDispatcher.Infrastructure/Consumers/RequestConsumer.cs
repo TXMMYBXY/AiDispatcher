@@ -9,12 +9,12 @@ namespace AiDispatcher.Infrastructure.Consumers;
 public class RequestConsumer : IConsumer<AiRoutingRequest>
 {
     private readonly ILogger<RequestConsumer> _logger;
-    private readonly IAgentDispatcher _agentDispatcher;
+    private readonly IProviderDispatcher _providerDispatcher;
 
-    public RequestConsumer(ILogger<RequestConsumer> logger, IAgentDispatcher agentDispatcher)
+    public RequestConsumer(ILogger<RequestConsumer> logger, IProviderDispatcher providerDispatcher)
     {
         _logger = logger;
-        _agentDispatcher = agentDispatcher;
+        _providerDispatcher = providerDispatcher;
     }
     
     public async Task Consume(ConsumeContext<AiRoutingRequest> context)
@@ -23,8 +23,8 @@ public class RequestConsumer : IConsumer<AiRoutingRequest>
         
         request.ThrowIfNull(nameof(request));
         
-        _logger.LogInformation("Received request with id: {Request}", request.RequestId);
+        _logger.LogInformation("Received request with id: {Request}", request.Request.Id);
         
-        await _agentDispatcher.DispatchAsync(request.Request);
+        await _providerDispatcher.DispatchAsync(request.Request);
     }
 }

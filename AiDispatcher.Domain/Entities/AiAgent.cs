@@ -6,7 +6,7 @@ public class AiAgent
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public AgentType Type { get; private set; }
+    public ModelProvider Provider { get; private set; }
     public string Endpoint { get; private set; }
     public string ApiKey { get; private set; }
     public bool IsActive { get; private set; }
@@ -18,7 +18,7 @@ public class AiAgent
 
     public AiAgent(
         string name,
-        AgentType type,
+        ModelProvider provider,
         string endpoint,
         string apiKey,
         int maxConcurrentRequests = 10,
@@ -35,7 +35,7 @@ public class AiAgent
 
         Id = Guid.NewGuid();
         Name = name;
-        Type = type;
+        Provider = provider;
         Endpoint = endpoint;
         ApiKey = apiKey;
         MaxConcurrentRequests = maxConcurrentRequests;

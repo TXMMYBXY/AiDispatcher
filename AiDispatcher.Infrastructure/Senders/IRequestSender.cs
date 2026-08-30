@@ -5,7 +5,7 @@ namespace AiDispatcher.Infrastructure.Senders;
 
 public interface IRequestSender
 {
-    AgentType AgentType { get; }
+    ModelProvider ModelProvider { get; }
     
     Task<AiResponse> SendRequestAsync(AiRequest request, CancellationToken ct = default);
 }
