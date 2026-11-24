@@ -1,28 +1,19 @@
-﻿services:
+services:
   worker:
     image: aidispatcher.worker
     container_name: worker
     build:
       context: .
       dockerfile: AiDispatcher.Worker/Dockerfile
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    restart: unless-stopped
-    ports:
-      - "5672:5672"
+    networks:
+      - dispatch-network
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASSWORD: guest
-      RABBITMQ_USER: ${RABBITMQ_USER}
-      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
-    healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 15s
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER:?Set RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?Set RABBITMQ_PASSWORD}
+      GOOGLE_APIKEY: ${GOOGLE_APIKEY:-}
+      OPENAI_APIKEY: ${OPENAI_APIKEY:-}
 
+networks:
+  dispatch-network:
+    external: true

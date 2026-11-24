@@ -24,6 +24,7 @@ public class RequestConsumer : IConsumer<AiRoutingRequest>
         request.ThrowIfNull(nameof(request));
         
         _logger.LogInformation("Received request with id: {Request}", request.Request.Id);
+        _logger.LogInformation(request.Request.Content);
         
         await _providerDispatcher.DispatchAsync(request.Request);
     }

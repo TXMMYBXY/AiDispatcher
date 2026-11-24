@@ -1,6 +1,6 @@
 namespace AiDispatcher.Infrastructure.Configuration;
 
-public class GoogleSettings
+public abstract class BaseConfiguration
 {
     public string ApiKey { get; set; } = string.Empty;
 }

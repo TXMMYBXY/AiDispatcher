@@ -18,7 +18,8 @@ public static class DependencyInjection
         var rabbitUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
         var rabbitPass = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
         
-        services.Configure<GoogleSettings>(configuration.GetSection(nameof(GoogleSettings)));
+        services.Configure<GoogleConfiguration>(configuration.GetSection(nameof(GoogleConfiguration)));
+        services.Configure<OpenAiConfiguration>(configuration.GetSection(nameof(OpenAiConfiguration)));
         
         services.AddMassTransit(options =>
         {
@@ -38,14 +39,17 @@ public static class DependencyInjection
         services.AddScoped<IProviderDispatcher, ProviderDispatcher>();
         
         services.AddScoped<GoogleSender>();
-        services.AddScoped<IRequestSender, GoogleSender>();
+        services.AddScoped<OpenAiSender>();
+        services.AddScoped<IProviderSender, GoogleSender>();
+        services.AddScoped<IProviderSender, OpenAiSender>();
 
         services.AddHttpClient<IWebhookClient, WebhookClient>();
 
-        services.AddScoped<IReadOnlyDictionary<ModelProvider, IRequestSender>>(sp =>
-            new Dictionary<ModelProvider, IRequestSender>()
+        services.AddScoped<IReadOnlyDictionary<ModelProvider, IProviderSender>>(sp =>
+            new Dictionary<ModelProvider, IProviderSender>()
             {
-                { ModelProvider.Google, sp.GetRequiredService<GoogleSender>()}
+                { ModelProvider.Google, sp.GetRequiredService<GoogleSender>()},
+                { ModelProvider.OpenAi, sp.GetRequiredService<OpenAiSender>()},
             });
         
         return services;
