@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using AiDispatcher.Domain.Entities;
+using AiDispatcher.Shared.Contracts.Events;
 using Microsoft.Extensions.Logging;
 
 namespace AiDispatcher.Infrastructure.Clients;
@@ -19,10 +20,11 @@ public class WebhookClient : IWebhookClient
     public async Task SendResponseAsync(string uri, AiResponse response)
     {
         _logger.LogInformation($"Sending response to {uri}");
+        _logger.LogInformation(response.Content);
         
         var requestJson = JsonSerializer.Serialize(response);
-        var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
-        var result = await _httpClient.PostAsync(uri, requestContent);
+        using var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
+        using var result = await _httpClient.PostAsync(uri, requestContent);
 
         if (!result.IsSuccessStatusCode)
         {
@@ -46,6 +48,22 @@ public class WebhookClient : IWebhookClient
                 null,
                 result.StatusCode
             );
+        }
+    }
+
+    public async Task SendResultAsync(string uri, AiGenerationResult result)
+    {
+        var requestJson = JsonSerializer.Serialize(result);
+        using var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
+        using var response = await _httpClient.PostAsync(uri, requestContent);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException(
+                $"Webhook request failed with status {response.StatusCode}: {errorContent}",
+                null,
+                response.StatusCode);
         }
     }
 }

@@ -46,6 +46,19 @@ public class AiRequest
         MaxRetries = 3;
     }
 
+    public AiRequest(
+        Guid id,
+        long userId,
+        ModelProvider modelProviderId,
+        string content,
+        ResponseChannel responseChannel,
+        string webhookUrl,
+        byte[]? imageData = null)
+        : this(userId, modelProviderId, content, responseChannel, webhookUrl, imageData)
+    {
+        Id = id;
+    }
+
     public void MarkAsProcessing()
     {
         if (Status != RequestStatus.Pending)

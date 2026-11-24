@@ -3,7 +3,7 @@ using AiDispatcher.Domain.Enums;
 
 namespace AiDispatcher.Infrastructure.Senders;
 
-public interface IRequestSender
+public interface IProviderSender
 {
     ModelProvider ModelProvider { get; }
     
